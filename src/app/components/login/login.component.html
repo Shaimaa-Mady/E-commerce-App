@@ -1,0 +1,86 @@
+<section>
+  <div class="container">
+    <div class="my-4 mx-auto shadow rounded-4 bg-main-light p-4">
+      <h2 class="fw-bolder fs-3 fs">Login Now</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="handleForm()">
+        <div class="input-email mb-2">
+          <label for="email">Email :</label>
+          <input
+            formControlName="email"
+            type="email"
+            id="email"
+            class="form-control"
+            #inputEmail
+          />
+          <div
+            class="alert alert-danger small mt-3"
+            *ngIf="
+              loginForm.get('email')?.errors &&
+              (loginForm.get('email')?.touched || inputEmail.value.length > 0)
+            "
+          >
+            <p
+              class="mb-0"
+              *ngIf="loginForm.get('email')?.getError('required')"
+            >
+              Email is required
+            </p>
+            <p class="mb-0" *ngIf="loginForm.get('email')?.getError('email')">
+              Email is invalid
+            </p>
+          </div>
+        </div>
+        <div class="input-password mb-2">
+          <label for="password">Password :</label>
+          <input
+            formControlName="password"
+            type="password"
+            id="password"
+            class="form-control"
+            #inputPassword
+          />
+          <div
+            class="alert alert-danger small mt-3"
+            *ngIf="
+              loginForm.get('password')?.errors &&
+              (loginForm.get('password')?.touched ||
+                inputPassword.value.length > 0)
+            "
+          >
+            <p
+              class="mb-0"
+              *ngIf="loginForm.get('password')?.getError('required')"
+            >
+              Password is required
+            </p>
+            <p
+              class="mb-0"
+              *ngIf="loginForm.get('password')?.getError('pattern')"
+            >
+            Start with capital letter then from 5 to 8 numbers or small
+            letters
+            </p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <p
+            class="text-main fw-bolder"
+            role="button"
+            routerLink="/forgetPassword"
+          >
+            forget your password ?
+          </p>
+          <button class="main-btn my-2 py-2">
+            <span *ngIf="isLoading"
+              ><i class="fa-solid fa-spinner fa-spin"></i
+            ></span>
+            Login Now
+          </button>
+        </div>
+        <p *ngIf="msgError" class="text-center text-danger pt-2">
+          {{ msgError }}
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

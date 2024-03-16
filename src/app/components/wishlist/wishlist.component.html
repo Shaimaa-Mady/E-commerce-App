@@ -1,0 +1,31 @@
+<section class="mt-2 mb-4" *ngIf="products.length > 0">
+  <h2 class="h4 pt-4 fw-bold">Shop Popular Products</h2>
+  <div class="row g-4">
+    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2" *ngFor="let product of products | slice:0:18 ">
+      <div class="product p-2 position-relative">
+        <i *ngIf="wishListDetails.includes(product._id)" (click)="removeItemFromWishList(product._id)" class="fa-solid fa-heart-circle-minus cursor-pointer heart"></i>
+        <i *ngIf="!wishListDetails.includes(product._id)" (click)="goWish(product._id)" class="fa-regular fa-solid fa-heart-circle-minus cursor-pointer"></i>
+        <div class="cursor-pointer "  [routerLink]= "['/details',product._id]">
+          <div>
+            <img [src]="product.imageCover" class="w-100" [title]="product.title" [alt]="product.title">
+            <h3 class="h6 fw-bold pt-1">{{product.title | cuttext:2}}</h3>
+            <h4 class="h6 text-main py-0">{{product.category.name}}</h4>
+
+            <div class="small">
+              <span>{{product.price | currency: 'EGP '}}</span>
+              <div>
+                <i [class.rating-color]="product.ratingsAverage >= num" *ngFor="let num of [1,2,3,4,5]" class="fa-solid fa-star"></i>      
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="position-absolute cart-shopping cursor-pointer" (click)="goCart(product._id, shopping ,correct)">
+          <i #shopping class="fa-solid fa-cart-plus text-main fs-3 "></i>
+          <i #correct class="fa-solid fa-check text-main fs-3 d-none "></i>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
